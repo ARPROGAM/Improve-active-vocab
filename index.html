@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="quiz-container">
+        <!-- Quiz Section -->
         <div class="question">
             <h2 id="chapter">Chapter 1: ENGLISH</h2>
             <p id="definition">The title given in modern parlance to the meaning or definition.</p>
@@ -22,4 +23,18 @@
             <div class="option" onclick="checkAnswer(this, 3)">Option 4</div>
         </div>
         <div class="navigation">
-            <button onclick="previo
+            <button onclick="previousCard()">Previous</button>
+            <button onclick="nextCard()">Next</button>
+        </div>
+        <p id="wordCount">Words Entered: 0</p>
+    </div>
+
+    <!-- Word Input Form -->
+    <div class="word-form">
+        <input type="text" id="newWordInput" placeholder="Enter a new word">
+        <button onclick="addNewWord()">Add Word</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
