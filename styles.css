@@ -1,73 +1,11 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* Add styles for the navigation buttons */
+.navigation {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5deb3; /* Light golden background */
-    background-image: url('background.jpg'); /* Add your background image here */
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-.quiz-container {
-    background-color: rgba(210, 180, 140, 0.8); /* Tan color with some transparency */
-    border-radius: 15px;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.question {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.translation {
-    text-align: center;
-    font-style: italic;
-    color: #f4a460;
-    margin-bottom: 20px;
-}
-
-.options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.option {
-    background-color: #f4e1c1;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.option:hover {
-    background-color: #e0c69b;
-}
-
-.word-form {
-    margin-top: 30px;
-    text-align: center;
-}
-
-#newWordInput {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.word-form button {
+.navigation button {
     padding: 10px 15px;
     font-size: 16px;
     background-color: #007bff;
@@ -75,9 +13,15 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;
 }
 
-.word-form button:hover {
+.navigation button:hover {
     background-color: #0056b3;
+}
+
+#wordCount {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #fff;
 }
