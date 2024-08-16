@@ -6,20 +6,32 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f5deb3; /* Light golden background similar to the image */
+    background-color: #f5deb3; /* Light golden background */
+    background-image: url('background.jpg'); /* Add your background image here */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
 }
 
 .quiz-container {
-    background-color: #d2b48c; /* Tan color similar to parchment */
+    background-color: rgba(210, 180, 140, 0.8); /* Tan color with some transparency */
     border-radius: 15px;
     padding: 20px;
-    width: 70%;
+    width: 80%;
     max-width: 600px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .question {
     text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.translation {
+    text-align: center;
+    font-style: italic;
+    color: #f4a460;
     margin-bottom: 20px;
 }
 
