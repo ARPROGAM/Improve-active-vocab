@@ -1,8 +1,15 @@
-function checkAnswer(element, status) {
-    if (status === 'correct') {
+let words = []; // Array to store the words
+let currentWordIndex = 0;
+
+function checkAnswer(element, selectedOptionIndex) {
+    const correctOptionIndex = words[currentWordIndex].correctOptionIndex;
+
+    if (selectedOptionIndex === correctOptionIndex) {
         element.style.backgroundColor = 'green';
+        setTimeout(nextCard, 1000); // Automatically go to the next card after 1 second
     } else {
         element.style.backgroundColor = 'red';
+        translateWord(words[currentWordIndex].word, 'uz'); // Show translation in Uzbek
     }
 }
 
@@ -14,8 +21,8 @@ async function fetchWordData(word) {
         if (data && data.length > 0) {
             const meaning = data[0].meanings[0].definitions[0].definition;
             const example = data[0].meanings[0].definitions[0].example || "No example available.";
-            document.getElementById('definition').textContent = `${meaning} Example: ${example}`;
-            translateWord(word);
+            words[currentWordIndex].definition = `${meaning} Example: ${example}`;
+            updateQuizCard();
         } else {
             document.getElementById('definition').textContent = 'No data found for this word.';
         }
@@ -25,13 +32,13 @@ async function fetchWordData(word) {
     }
 }
 
-async function translateWord(word) {
+async function translateWord(word, targetLanguage) {
     try {
         const response = await fetch(`https://translation.googleapis.com/language/translate/v2?key=Your-API-Key`, {
             method: "POST",
             body: JSON.stringify({
                 q: word,
-                target: "es" // Set the target language here
+                target: targetLanguage
             })
         });
         const data = await response.json();
@@ -64,24 +71,45 @@ async function setBackground(word) {
 function addNewWord() {
     const newWord = document.getElementById('newWordInput').value.trim();
     if (newWord) {
+        words.push({
+            word: newWord,
+            correctOptionIndex: Math.floor(Math.random() * 4) // Randomly choose the correct option
+        });
+        currentWordIndex = words.length - 1;
         fetchWordData(newWord);
         setBackground(newWord);
-        updateQuizOptions(newWord);
+        updateWordCount();
         document.getElementById('newWordInput').value = '';
     }
 }
 
-function updateQuizOptions(correctWord) {
+function updateQuizCard() {
+    const currentWord = words[currentWordIndex];
+    document.getElementById('definition').textContent = currentWord.definition || 'Loading...';
     const options = document.querySelectorAll('.option');
-    options[0].textContent = "Option 1";
-    options[1].textContent = "Option 2";
-    options[2].textContent = correctWord;
-    options[2].setAttribute('onclick', "checkAnswer(this, 'correct')");
-    
-    // Randomly set the other options as wrong
-    for (let i = 0; i < options.length; i++) {
-        if (i !== 2) {
-            options[i].setAttribute('onclick', "checkAnswer(this, 'wrong')");
-        }
+    options.forEach((option, index) => {
+        option.textContent = `Option ${index + 1}`;
+        option.style.backgroundColor = '#f4e1c1';
+    });
+    options[currentWord.correctOptionIndex].textContent = currentWord.word;
+}
+
+function nextCard() {
+    if (currentWordIndex < words.length - 1) {
+        currentWordIndex++;
+        updateQuizCard();
+        setBackground(words[currentWordIndex].word);
     }
+}
+
+function previousCard() {
+    if (currentWordIndex > 0) {
+        currentWordIndex--;
+        updateQuizCard();
+        setBackground(words[currentWordIndex].word);
+    }
+}
+
+function updateWordCount() {
+    document.getElementById('wordCount').textContent = `Words Entered: ${words.length}`;
 }
