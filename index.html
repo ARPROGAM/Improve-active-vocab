@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="central-circle">
+        <p id="definition">Meaning and example</p>
+    </div>
+    <div class="option-circles">
+        <div class="circle" onclick="checkAnswer(this, 'correct')">Correct Word</div>
+        <div class="circle" onclick="checkAnswer(this, 'wrong')">Wrong Word 1</div>
+        <div class="circle" onclick="checkAnswer(this, 'wrong')">Wrong Word 2</div>
+        <!-- Add more options as needed -->
+    </div>
+    
+    <!-- New Word Input Form -->
+    <div class="word-form">
+        <input type="text" id="newWordInput" placeholder="Enter a new word">
+        <button onclick="addNewWord()">Add Word</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
