@@ -16,19 +16,10 @@
             Translation: <span id="translatedWord">Translated word will appear here.</span>
         </div>
         <div class="options">
-            <div class="option" onclick="checkAnswer(this, 'wrong')">Option 1</div>
-            <div class="option" onclick="checkAnswer(this, 'wrong')">Option 2</div>
-            <div class="option" onclick="checkAnswer(this, 'correct')">Option 3</div>
-            <div class="option" onclick="checkAnswer(this, 'wrong')">Option 4</div>
+            <div class="option" onclick="checkAnswer(this, 0)">Option 1</div>
+            <div class="option" onclick="checkAnswer(this, 1)">Option 2</div>
+            <div class="option" onclick="checkAnswer(this, 2)">Option 3</div>
+            <div class="option" onclick="checkAnswer(this, 3)">Option 4</div>
         </div>
-    </div>
-
-    <!-- New Word Input Form -->
-    <div class="word-form">
-        <input type="text" id="newWordInput" placeholder="Enter a new word">
-        <button onclick="addNewWord()">Add Word</button>
-    </div>
-
-    <script src="scripts.js"></script>
-</body>
-</html>
+        <div class="navigation">
+            <button onclick="previo
