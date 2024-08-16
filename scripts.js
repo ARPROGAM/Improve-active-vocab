@@ -1,18 +1,41 @@
-// Other functions
+function checkAnswer(element, status) {
+    if (status === 'correct') {
+        element.style.backgroundColor = 'green';
+    } else {
+        element.style.backgroundColor = 'red';
+    }
+}
 
 async function fetchWordData(word) {
-    const response = await fetch(`https://api.wordsapi.com/v2/entries/en/${word}`, {
-        headers: { 'Authorization': 'Your-API-Key' }
-    });
-    const data = await response.json();
-    document.getElementById('definition').textContent = data.meaning;
-    // Populate options with correct and incorrect words
+    try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            const meaning = data[0].meanings[0].definitions[0].definition;
+            const example = data[0].meanings[0].definitions[0].example || "No example available.";
+            document.getElementById('definition').textContent = `${meaning} Example: ${example}`;
+        } else {
+            document.getElementById('definition').textContent = 'No data found for this word.';
+        }
+    } catch (error) {
+        document.getElementById('definition').textContent = 'Error fetching word data.';
+        console.error('Error fetching word data:', error);
+    }
 }
 
 async function setBackground(word) {
-    const response = await fetch(`https://api.unsplash.com/photos/random?query=${word}&client_id=Your-Client-ID`);
-    const data = await response.json();
-    document.body.style.backgroundImage = `url(${data.urls.full})`;
+    try {
+        const response = await fetch(`https://api.unsplash.com/photos/random?query=${word}&client_id=Your-Client-ID`);
+        const data = await response.json();
+        if (data && data.urls) {
+            document.body.style.backgroundImage = `url(${data.urls.full})`;
+        } else {
+            document.body.style.backgroundImage = `none`;
+        }
+    } catch (error) {
+        console.error('Error fetching background image:', error);
+    }
 }
 
 function addNewWord() {
@@ -26,15 +49,16 @@ function addNewWord() {
 }
 
 function updateQuizOptions(correctWord) {
-    // Update the circles with the correct word and new wrong options
-    const circles = document.querySelectorAll('.circle');
-    circles[0].textContent = correctWord;
-    circles[0].setAttribute('onclick', "checkAnswer(this, 'correct')");
+    const options = document.querySelectorAll('.option');
+    options[0].textContent = "Option 1";
+    options[1].textContent = "Option 2";
+    options[2].textContent = correctWord;
+    options[2].setAttribute('onclick', "checkAnswer(this, 'correct')");
     
-    // For demonstration, adding random wrong words. Replace these with real words.
-    circles[1].textContent = "Wrong Word 1";
-    circles[1].setAttribute('onclick', "checkAnswer(this, 'wrong')");
-    
-    circles[2].textContent = "Wrong Word 2";
-    circles[2].setAttribute('onclick', "checkAnswer(this, 'wrong')");
+    // Randomly set the other options as wrong
+    for (let i = 0; i < options.length; i++) {
+        if (i !== 2) {
+            options[i].setAttribute('onclick', "checkAnswer(this, 'wrong')");
+        }
+    }
 }
