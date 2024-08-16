@@ -15,12 +15,35 @@ async function fetchWordData(word) {
             const meaning = data[0].meanings[0].definitions[0].definition;
             const example = data[0].meanings[0].definitions[0].example || "No example available.";
             document.getElementById('definition').textContent = `${meaning} Example: ${example}`;
+            translateWord(word);
         } else {
             document.getElementById('definition').textContent = 'No data found for this word.';
         }
     } catch (error) {
         document.getElementById('definition').textContent = 'Error fetching word data.';
         console.error('Error fetching word data:', error);
+    }
+}
+
+async function translateWord(word) {
+    try {
+        const response = await fetch(`https://translation.googleapis.com/language/translate/v2?key=Your-API-Key`, {
+            method: "POST",
+            body: JSON.stringify({
+                q: word,
+                target: "es" // Set the target language here
+            })
+        });
+        const data = await response.json();
+
+        if (data && data.data && data.data.translations) {
+            document.getElementById('translatedWord').textContent = data.data.translations[0].translatedText;
+        } else {
+            document.getElementById('translatedWord').textContent = 'No translation available.';
+        }
+    } catch (error) {
+        document.getElementById('translatedWord').textContent = 'Error fetching translation.';
+        console.error('Error fetching translation:', error);
     }
 }
 
